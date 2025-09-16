@@ -1,0 +1,59 @@
+name: Build and Run OpenAiCodeReview By Main Remote Jar
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2  # 检出最后两个提交，以便可以比较 HEAD~1 和 HEAD
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'  # 你可以选择其他发行版，如 'adopt' 或 'zulu'
+          java-version: '21'
+
+      - name: Create libs directory
+        run: mkdir -p ./libs
+
+      - name: Download openai-code-review-sdk JAR
+        run: wget -O ./libs/auto-code-review-sdk-1.0.jar https://github.com/zj669/auto-code-review-log/releases/download/v1.0/auto-code-review-sdk-1.0.jar
+      - name: Get repository name
+        id: repo-name
+        run: echo "PROJECT=${GITHUB_REPOSITORY##*/}" >> $GITHUB_ENV
+
+      - name: Get branch name
+        id: branch-name
+        run: echo "BRANCH=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      - name: Get commit author
+        id: commit-author
+        run: echo "AUTHOR=$(git log -1 --pretty=format:'%an <%ae>')" >> $GITHUB_ENV
+
+      - name: Get commit message
+        id: commit-message
+        run: echo "MESSAGE=$(git log -1 --pretty=format:'%s')" >> $GITHUB_ENV
+
+      - name: Print repository, branch name, commit author, and commit message
+        run: |
+          echo "Repository name is ${{ env.PROJECT }}"
+          echo "Branch name is ${{ env.BRANCH }}"
+          echo "Commit author is ${{ env.AUTHOR }}"
+          echo "Commit message is ${{ env.MESSAGE }}"      
+
+      - name: Run Code Review
+        run: java -jar ./libs/auto-code-review-sdk-1.0.jar
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+          URL: ${{ secrets.URL }}
