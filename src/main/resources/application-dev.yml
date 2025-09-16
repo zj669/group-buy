@@ -35,6 +35,16 @@ mybatis:
   mapper-locations: classpath:/mybatis/mapper/*.xml
   config-location:  classpath:/mybatis/config/mybatis-config.xml
 
+# MyBatis-Plus配置
+mybatis-plus:
+  configuration:
+    # SQL日志打印
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      # 主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID"
+      id-type: AUTO
+
 # Redis
 redis:
   sdk:
@@ -50,7 +60,6 @@ redis:
       retry-interval: 1000
       ping-interval: 60000
       keep-alive: true
-
 
 # 日志
 logging:
