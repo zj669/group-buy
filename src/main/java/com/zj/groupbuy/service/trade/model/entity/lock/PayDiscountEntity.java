@@ -1,5 +1,6 @@
 package com.zj.groupbuy.service.trade.model.entity.lock;
 
+import com.zj.groupbuy.model.enums.NotifyTaskMethodenum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,5 +28,10 @@ public class PayDiscountEntity {
     private BigDecimal deductionPrice;
     /** 外部交易单号-确保外部调用唯一幂等 */
     private String outTradeNo;
+
+    /** 支付成功回调地址 */
+    private String notify;
+
+    private NotifyTaskMethodenum notifyType;
 
 }

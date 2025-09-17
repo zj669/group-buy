@@ -6,6 +6,7 @@ import com.zj.groupbuy.model.dto.LockMarketPayOrderRequestDTO;
 import com.zj.groupbuy.model.dto.LockMarketPayOrderResponseDTO;
 import com.zj.groupbuy.model.entity.GroupBuyActivity;
 import com.zj.groupbuy.model.entity.GroupBuyDiscount;
+import com.zj.groupbuy.model.enums.NotifyTaskMethodenum;
 import com.zj.groupbuy.model.enums.ResponseCode;
 import com.zj.groupbuy.service.activity.IIndexGroupBuyMarketService;
 import com.zj.groupbuy.service.activity.model.aggregate.GroupBuyActivityDiscountVO;
@@ -48,6 +49,8 @@ public class MarketTradeController {
             Long activityId = lockMarketPayOrderRequestDTO.getActivityId();
             String outTradeNo = lockMarketPayOrderRequestDTO.getOutTradeNo();
             String teamId = lockMarketPayOrderRequestDTO.getTeamId();
+            String notify = lockMarketPayOrderRequestDTO.getNotify();
+            NotifyTaskMethodenum notifyType = lockMarketPayOrderRequestDTO.getNotifyType();
 
             log.info("营销交易锁单:{} LockMarketPayOrderRequestDTO:{}", userId, JSON.toJSONString(lockMarketPayOrderRequestDTO));
 
@@ -124,6 +127,8 @@ public class MarketTradeController {
                             .originalPrice(trialBalanceEntity.getOriginalPrice())
                             .deductionPrice(trialBalanceEntity.getDeductionPrice())
                             .outTradeNo(outTradeNo)
+                            .notify(notify)
+                            .notifyType(notifyType)
                             .build());
 
             log.info("交易锁单记录(新):{} marketPayOrderEntity:{}", userId, JSON.toJSONString(marketPayOrderEntity));

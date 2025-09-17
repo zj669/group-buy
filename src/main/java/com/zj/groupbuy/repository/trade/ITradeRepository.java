@@ -1,11 +1,14 @@
 package com.zj.groupbuy.repository.trade;
 
 import com.zj.groupbuy.model.entity.GroupBuyActivity;
+import com.zj.groupbuy.model.entity.NotifyTask;
 import com.zj.groupbuy.service.trade.model.aggregate.lock.GroupBuyOrderAggregate;
 import com.zj.groupbuy.service.trade.model.aggregate.settlement.GroupBuyTeamSettlementAggregate;
 import com.zj.groupbuy.service.trade.model.entity.lock.GroupBuyProgressVO;
 import com.zj.groupbuy.service.trade.model.entity.lock.MarketPayOrderEntity;
 import com.zj.groupbuy.service.trade.model.entity.settlement.GroupBuyTeamEntity;
+
+import java.util.List;
 
 public interface ITradeRepository {
     GroupBuyActivity queryGroupBuyActivityEntityByActivityId(Long activityId);
@@ -25,4 +28,15 @@ public interface ITradeRepository {
     GroupBuyTeamEntity queryGroupBuyTeamByTeamId(String teamId);
 
     void settlementMarketPayOrder(GroupBuyTeamSettlementAggregate groupBuyTeamSettlementAggregate);
+
+    int updateNotifyTaskStatusError(NotifyTask notifyTask);
+
+
+    int updateNotifyTaskStatusRetry(NotifyTask notifyTask);
+
+    List<NotifyTask> queryUnExecutedNotifyTaskList();
+
+    List<NotifyTask> queryUnExecutedNotifyTaskList(String teamId);
+
+    int updateNotifyTaskStatusSuccess(NotifyTask notifyTask);
 }

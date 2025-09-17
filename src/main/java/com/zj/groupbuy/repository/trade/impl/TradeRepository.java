@@ -113,6 +113,8 @@ public class TradeRepository implements ITradeRepository {
                     .payPrice(payDiscountEntity.getDeductionPrice())
                     .validStartTime(payActivityEntity.getStartTime())
                     .validEndTime(payActivityEntity.getEndTime())
+                    .notifyUrl(payDiscountEntity.getNotify())
+                    .notifyType(payDiscountEntity.getNotifyType())
                     .build();
             groupBuyOrderDao.insert(groupBuyOrder);
         }else{
@@ -185,6 +187,8 @@ public class TradeRepository implements ITradeRepository {
                 .status(groupBuyOrder.getStatus())
                 .validStartTime(groupBuyOrder.getValidStartTime())
                 .validEndTime(groupBuyOrder.getValidEndTime())
+                .notify(groupBuyOrder.getNotifyUrl())
+                .notifyType(groupBuyOrder.getNotifyType())
                 .build();
     }
 
@@ -229,7 +233,8 @@ public class TradeRepository implements ITradeRepository {
             NotifyTask notifyTask = new NotifyTask();
             notifyTask.setActivityId(String.valueOf(groupBuyTeamEntity.getActivityId()));
             notifyTask.setTeamId(groupBuyTeamEntity.getTeamId());
-            notifyTask.setNotifyUrl("暂无");
+            notifyTask.setNotifyUrl(groupBuyTeamEntity.getNotify());
+            notifyTask.setNotifyType(groupBuyTeamEntity.getNotifyType());
             notifyTask.setNotifyCount(0);
             notifyTask.setNotifyStatus(0);
             notifyTask.setParameterJson(JSON.toJSONString(new HashMap<String, Object>() {{
@@ -239,5 +244,30 @@ public class TradeRepository implements ITradeRepository {
 
             notifyTaskDao.insert(notifyTask);
         }
+    }
+
+    @Override
+    public int updateNotifyTaskStatusError(NotifyTask notifyTask) {
+        return notifyTaskDao.updateNotifyTaskStatusError(notifyTask);
+    }
+
+    @Override
+    public int updateNotifyTaskStatusSuccess(NotifyTask notifyTask) {
+        return notifyTaskDao.updateNotifyTaskStatusSuccess(notifyTask);
+    }
+
+    @Override
+    public int updateNotifyTaskStatusRetry(NotifyTask notifyTask) {
+        return notifyTaskDao.updateNotifyTaskStatusRetry(notifyTask);
+    }
+
+    @Override
+    public List<NotifyTask> queryUnExecutedNotifyTaskList() {
+        return notifyTaskDao.queryUnExecutedNotifyTaskList();
+    }
+
+    @Override
+    public List<NotifyTask> queryUnExecutedNotifyTaskList(String teamId) {
+        return notifyTaskDao.queryUnExecutedNotifyTaskListByTeamId(teamId);
     }
 }

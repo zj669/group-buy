@@ -1,5 +1,6 @@
 package com.zj.groupbuy.model.dto;
 
+import com.zj.groupbuy.model.enums.NotifyTaskMethodenum;
 import lombok.Data;
 
 @Data
@@ -19,5 +20,8 @@ public class LockMarketPayOrderRequestDTO {
     private String channel;
     // 外部交易单号
     private String outTradeNo;
+    // 回调地址
+    private String notify;
+    private NotifyTaskMethodenum notifyType;
 
 }

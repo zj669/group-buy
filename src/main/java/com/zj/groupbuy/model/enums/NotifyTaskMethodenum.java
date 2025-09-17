@@ -16,7 +16,8 @@ public enum NotifyTaskMethodenum implements IBaseEnum<String> {
     ;
 
     @EnumValue
-    private String value;
     @JsonValue
+    private String value;
+
     private String label;
 }

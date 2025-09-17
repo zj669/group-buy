@@ -1,6 +1,7 @@
 package com.zj.groupbuy.service.trade.model.entity.settlement;
 
 import com.zj.groupbuy.model.enums.GroupBuyOrderEnum;
+import com.zj.groupbuy.model.enums.NotifyTaskMethodenum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,5 +31,9 @@ public class GroupBuyTeamEntity {
     private Date validStartTime;
     /** 拼团结束时间 - 拼团有效时长 */
     private Date validEndTime;
+
+    // 回调地址
+    private String notify;
+    private NotifyTaskMethodenum notifyType;
 
 }
