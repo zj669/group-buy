@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
@@ -46,12 +47,12 @@ public class CrowdTagsJob {
     /**
      * 统计数据，开始时间
      */
-    private LocalDateTime statStartTime;
+    private Date statStartTime;
 
     /**
      * 统计数据，结束时间
      */
-    private LocalDateTime statEndTime;
+    private Date statEndTime;
 
     /**
      * 状态；0初始、1计划（进入执行阶段）、2重置、3完成
@@ -61,10 +62,10 @@ public class CrowdTagsJob {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }

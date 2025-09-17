@@ -3,6 +3,7 @@ package com.zj.groupbuy.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.zj.groupbuy.model.enums.TradeOrderStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
@@ -42,17 +44,17 @@ public class GroupBuyOrderList {
     /**
      * 活动ID
      */
-    private Long activityId;
+    private String activityId;
 
     /**
      * 活动开始时间
      */
-    private LocalDateTime startTime;
+    private Date startTime;
 
     /**
      * 活动结束时间
      */
-    private LocalDateTime endTime;
+    private Date endTime;
 
     /**
      * 商品ID
@@ -87,7 +89,7 @@ public class GroupBuyOrderList {
     /**
      * 状态；0初始锁定、1消费完成、2用户退单
      */
-    private Integer status;
+    private TradeOrderStatusEnum status;
 
     /**
      * 外部交易单号-确保外部调用唯一幂等
@@ -97,7 +99,7 @@ public class GroupBuyOrderList {
     /**
      * 外部交易时间
      */
-    private LocalDateTime outTradeTime;
+    private Date outTradeTime;
 
     /**
      * 业务唯一ID
@@ -107,10 +109,10 @@ public class GroupBuyOrderList {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }

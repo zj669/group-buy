@@ -1,6 +1,7 @@
 package com.zj.groupbuy.service.activity.model.entity;
 
-import com.zj.groupbuy.service.activity.model.aggregate.GroupBuyActivityDiscountVO;
+import com.zj.groupbuy.model.entity.GroupBuyActivity;
+import com.zj.groupbuy.model.entity.GroupBuyDiscount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,5 +36,6 @@ public class TrialBalanceEntity {
     private Boolean isVisible;
     /** 是否可参与进团 */
     private Boolean isEnable;
+    private GroupBuyActivity activity;
 
 }

@@ -5,4 +5,5 @@ import com.zj.groupbuy.model.entity.GroupBuyOrderList;
 import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GroupBuyOrderListMapper extends BaseMapper<GroupBuyOrderList> {
+    int updateOrderStatus2COMPLETE(GroupBuyOrderList groupBuyOrderListReq);
 }

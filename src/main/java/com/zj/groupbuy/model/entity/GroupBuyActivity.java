@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
@@ -28,7 +29,7 @@ public class GroupBuyActivity {
     /**
      * 活动ID
      */
-    private Long activityId;
+    private String activityId;
 
     /**
      * 活动名称
@@ -68,12 +69,12 @@ public class GroupBuyActivity {
     /**
      * 活动开始时间
      */
-    private LocalDateTime startTime;
+    private Date startTime;
 
     /**
      * 活动结束时间
      */
-    private LocalDateTime endTime;
+    private Date endTime;
 
     /**
      * 人群标签规则标识
@@ -88,10 +89,10 @@ public class GroupBuyActivity {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }

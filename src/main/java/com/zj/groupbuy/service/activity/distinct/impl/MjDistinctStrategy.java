@@ -33,7 +33,7 @@ public class MjDistinctStrategy extends AbstractDistinctStrategy {
                 curPrice  = new BigDecimal("0.01");
             }
             return curPrice;
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             log.error("MJ模型转换异常");
             return sku.getOriginalPrice();
         }

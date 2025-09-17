@@ -24,10 +24,11 @@ public class EndNode extends AbstractGroupBuyMarketSupport {
                 .originalPrice(sku.getOriginalPrice())
                 .deductionPrice(dynamicContext.getDeductionPrice())
                 .targetCount(activity.getTarget())
-                .startTime(TimeUtils.toDate(activity.getStartTime()))
-                .endTime(TimeUtils.toDate(activity.getEndTime()))
+                .startTime(activity.getStartTime())
+                .endTime(activity.getEndTime())
                 .isVisible(dynamicContext.getIsVisible())
                 .isEnable(dynamicContext.getIsEnable())
+                .activity(dynamicContext.getActivity())
                 .build();
     }
 

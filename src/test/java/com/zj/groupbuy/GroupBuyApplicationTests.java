@@ -33,4 +33,9 @@ class GroupBuyApplicationTests {
         System.out.println(JSON.toJSONString(apply));
     }
 
+    @Test
+    void testSkuMapper() {
+
+    }
+
 }

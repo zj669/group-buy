@@ -9,9 +9,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression.DateTime;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
@@ -34,7 +36,7 @@ public class GroupBuyOrder {
     /**
      * 活动ID
      */
-    private Long activityId;
+    private String activityId;
 
     /**
      * 渠道
@@ -84,12 +86,12 @@ public class GroupBuyOrder {
     /**
      * 拼团开始时间
      */
-    private LocalDateTime validStartTime;
+    private Date validStartTime;
 
     /**
      * 拼团结束时间
      */
-    private LocalDateTime validEndTime;
+    private Date validEndTime;
 
     /**
      * 回调类型（HTTP、MQ）
@@ -104,10 +106,10 @@ public class GroupBuyOrder {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }

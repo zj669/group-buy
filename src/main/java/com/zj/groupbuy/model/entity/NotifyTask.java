@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Builder
@@ -27,7 +28,7 @@ public class NotifyTask {
     /**
      * 活动ID
      */
-    private Long activityId;
+    private String activityId;
 
     /**
      * 拼单组队ID
@@ -77,10 +78,10 @@ public class NotifyTask {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 }
