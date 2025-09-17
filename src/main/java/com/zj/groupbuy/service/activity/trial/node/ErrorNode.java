@@ -13,11 +13,12 @@ import org.springframework.stereotype.Component;
 public class ErrorNode extends AbstractGroupBuyMarketSupport {
     @Override
     protected TrialBalanceEntity doApply(MarketProductEntity marketProductEntity, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
-        return null;
+        log.info("进入兜底节点");
+        return TrialBalanceEntity.builder().build();
     }
 
     @Override
     public StrategyHandler<MarketProductEntity, DefaultActivityStrategyFactory.DynamicContext, TrialBalanceEntity> get(MarketProductEntity marketProductEntity, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
-        return null;
+        return defaultStrategyHandler;
     }
 }

@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: group-buy
-  config:
-    name: group-buy
-  profiles:
-    active: dev

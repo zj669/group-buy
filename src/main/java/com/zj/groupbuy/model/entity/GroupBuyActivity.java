@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zj.groupbuy.model.enums.ActivityStatusEnum;
+import com.zj.groupbuy.model.enums.CrowTagScopeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -82,7 +83,7 @@ public class GroupBuyActivity {
     /**
      * 人群标签规则范围（多选；1可见限制、2参与限制）
      */
-    private String tagScope;
+    private CrowTagScopeEnum tagScope;
 
     /**
      * 创建时间
