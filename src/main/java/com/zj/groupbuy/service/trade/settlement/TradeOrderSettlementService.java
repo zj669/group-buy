@@ -1,6 +1,8 @@
 package com.zj.groupbuy.service.trade.settlement;
 
+import com.alibaba.fastjson2.JSON;
 import com.zj.groupbuy.common.design.singletonresponsibilitychain.ILogicLink;
+import com.zj.groupbuy.exception.AppException;
 import com.zj.groupbuy.model.entity.NotifyTask;
 import com.zj.groupbuy.model.enums.NotifyTaskHTTPEnum;
 import com.zj.groupbuy.repository.trade.ITradeRepository;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 
 @Service
 @Slf4j
@@ -33,6 +36,8 @@ public class TradeOrderSettlementService implements ITradeOrderSettlementService
     private TradeSettlementRuleFilterFactory tradeSettlementRuleFilter;
     @Resource
     private DefaultNotifyFactory notifyFactory;
+    @Resource
+    private ThreadPoolExecutor threadPoolExecutor;
     @Override
     public TradePaySettlementEntity settlementMarketPayOrder(TradePaySuccessEntity tradePaySuccessEntity) {
         log.info("拼团交易-支付订单结算:{} outTradeNo:{}", tradePaySuccessEntity.getUserId(), tradePaySuccessEntity.getOutTradeNo());
@@ -70,7 +75,19 @@ public class TradeOrderSettlementService implements ITradeOrderSettlementService
                 .build();
 
         // 4. 拼团交易结算
-        repository.settlementMarketPayOrder(groupBuyTeamSettlementAggregate);
+        NotifyTask notifyTask = repository.settlementMarketPayOrder(groupBuyTeamSettlementAggregate);
+        if (notifyTask != null) {
+            threadPoolExecutor.execute(() -> {
+                Map<String, Integer> notifyResultMap = null;
+                try {
+                    notifyResultMap = execSettlementNotifyJob(List.of(notifyTask));
+                    log.info("回调通知拼团完结 result:{}", JSON.toJSONString(notifyResultMap));
+                } catch (Exception e) {
+                    log.error("回调通知拼团完结失败 result:{}", JSON.toJSONString(notifyResultMap), e);
+                    throw new AppException(e.getMessage());
+                }
+            });
+        }
 
         // 5. 返回结算信息 - 公司中开发这样的流程时候，会根据外部需要进行值的设置
         return TradePaySettlementEntity.builder()

@@ -1,5 +1,7 @@
 package com.zj.groupbuy.integretion.task;
 
+import com.alibaba.fastjson2.JSON;
+import com.zj.groupbuy.service.trade.ITradeOrderSettlementService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,7 +14,7 @@ import java.util.Map;
 public class GroupBuyNotifyJob {
 
     @Resource
-    private ITradeSettlementOrderService tradeSettlementOrderService;
+    private ITradeOrderSettlementService tradeSettlementOrderService;
 
     @Scheduled(cron = "0/15 * * * * ?")
     public void exec() {

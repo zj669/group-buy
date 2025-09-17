@@ -27,7 +27,7 @@ public interface ITradeRepository {
 
     GroupBuyTeamEntity queryGroupBuyTeamByTeamId(String teamId);
 
-    void settlementMarketPayOrder(GroupBuyTeamSettlementAggregate groupBuyTeamSettlementAggregate);
+    NotifyTask settlementMarketPayOrder(GroupBuyTeamSettlementAggregate groupBuyTeamSettlementAggregate);
 
     int updateNotifyTaskStatusError(NotifyTask notifyTask);
 
