@@ -23,7 +23,7 @@ public class SCRuleFilter extends AbstractLogicLink<TradeSettlementRuleCommandEn
     @Resource
     private ITradeRepository repository;
     @Override
-    public TradeSettlementRuleFilterBackEntity apply(TradeSettlementRuleCommandEntity requestParameter, TradeSettlementRuleFilterFactory.DynamicContext dynamicContext) {
+    public TradeSettlementRuleFilterBackEntity doApply(TradeSettlementRuleCommandEntity requestParameter, TradeSettlementRuleFilterFactory.DynamicContext dynamicContext) {
         log.info("结算规则过滤-渠道黑名单校验{} outTradeNo:{}", requestParameter.getUserId(), requestParameter.getOutTradeNo());
 
         // sc 渠道黑名单拦截
@@ -32,6 +32,6 @@ public class SCRuleFilter extends AbstractLogicLink<TradeSettlementRuleCommandEn
             log.error("{}{} 渠道黑名单拦截", requestParameter.getSource(), requestParameter.getChannel());
             throw new AppException(ResponseCode.E0015);
         }
-        return null;
+        return TradeSettlementRuleFilterBackEntity.builder().build();
     }
 }

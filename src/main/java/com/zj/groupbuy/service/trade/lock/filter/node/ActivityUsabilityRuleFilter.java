@@ -27,7 +27,7 @@ public class ActivityUsabilityRuleFilter extends AbstractLogicLink<TradeLockRule
     private ITradeRepository repository;
 
     @Override
-    public TradeLockRuleFilterBackEntity apply(TradeLockRuleCommandEntity requestParameter, TradeLockRuleFilterFactory.DynamicContext dynamicContext){
+    public TradeLockRuleFilterBackEntity doApply(TradeLockRuleCommandEntity requestParameter, TradeLockRuleFilterFactory.DynamicContext dynamicContext){
         log.info("交易规则过滤1-活动的可用性校验{} activityId:{}", requestParameter.getUserId(), requestParameter.getActivityId());
 
         // 查询拼团活动

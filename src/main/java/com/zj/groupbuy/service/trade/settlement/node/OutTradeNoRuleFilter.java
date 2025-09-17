@@ -24,7 +24,7 @@ public class OutTradeNoRuleFilter extends AbstractLogicLink<TradeSettlementRuleC
     @Resource
     private ITradeRepository repository;
     @Override
-    public TradeSettlementRuleFilterBackEntity apply(TradeSettlementRuleCommandEntity requestParameter, TradeSettlementRuleFilterFactory.DynamicContext dynamicContext) {
+    public TradeSettlementRuleFilterBackEntity doApply(TradeSettlementRuleCommandEntity requestParameter, TradeSettlementRuleFilterFactory.DynamicContext dynamicContext) {
         log.info("结算规则过滤-外部单号校验{} outTradeNo:{}", requestParameter.getUserId(), requestParameter.getOutTradeNo());
 
 
@@ -37,6 +37,6 @@ public class OutTradeNoRuleFilter extends AbstractLogicLink<TradeSettlementRuleC
         }
 
         dynamicContext.setMarketPayOrderEntity(marketPayOrderEntity);
-        return null;
+        return TradeSettlementRuleFilterBackEntity.builder().build();
     }
 }

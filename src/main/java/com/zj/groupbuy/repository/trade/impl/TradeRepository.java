@@ -72,7 +72,11 @@ public class TradeRepository implements ITradeRepository {
     @Override
     public MarketPayOrderEntity queryNoPayMarketPayOutOrder(String userId, String outTradeNo) {
 
-        GroupBuyOrderList groupBuyOrderList =  groupBuyOrderListDao.selectOne(new LambdaQueryWrapper<GroupBuyOrderList>().eq(GroupBuyOrderList::getUserId,userId).eq(GroupBuyOrderList::getOutTradeNo,outTradeNo));
+        GroupBuyOrderList groupBuyOrderList =  groupBuyOrderListDao.selectOne(new LambdaQueryWrapper<GroupBuyOrderList>()
+                .eq(GroupBuyOrderList::getUserId,userId)
+                .eq(GroupBuyOrderList::getOutTradeNo,outTradeNo)
+                .eq(GroupBuyOrderList::getStatus, TradeOrderStatusEnum.CREATE)
+        );
         if(groupBuyOrderList == null){
             log.info("未查询到订单");
             return null;
@@ -86,6 +90,7 @@ public class TradeRepository implements ITradeRepository {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public MarketPayOrderEntity lockPayOrder(GroupBuyOrderAggregate groupBuyOrderAggregate) {
         UserEntity userEntity = groupBuyOrderAggregate.getUserEntity();
         PayActivityEntity payActivityEntity = groupBuyOrderAggregate.getPayActivityEntity();
@@ -135,6 +140,7 @@ public class TradeRepository implements ITradeRepository {
                 .status(TradeOrderStatusEnum.CREATE)
                 .outTradeNo(payDiscountEntity.getOutTradeNo())
                 .bizId(bizId)
+                .payPrice(payDiscountEntity.getDeductionPrice())
                 .build();
 
         groupBuyOrderListDao.insert(groupBuyOrderListReq);
@@ -152,7 +158,11 @@ public class TradeRepository implements ITradeRepository {
 
     @Override
     public MarketPayOrderEntity queryMarketPayOrderEntityByOutTradeNo(String userId, String outTradeNo) {
-        GroupBuyOrderList groupBuyOrderListRes = groupBuyOrderListDao.selectOne(new LambdaQueryWrapper<GroupBuyOrderList>().eq(GroupBuyOrderList::getUserId, userId).eq(GroupBuyOrderList::getOutTradeNo, outTradeNo));
+        GroupBuyOrderList groupBuyOrderListRes = groupBuyOrderListDao.selectOne(new LambdaQueryWrapper<GroupBuyOrderList>()
+                .eq(GroupBuyOrderList::getUserId, userId)
+                .eq(GroupBuyOrderList::getOutTradeNo, outTradeNo)
+                .eq(GroupBuyOrderList::getStatus, TradeOrderStatusEnum.CREATE)
+        );
         if (null == groupBuyOrderListRes) return null;
 
         return MarketPayOrderEntity.builder()

@@ -26,7 +26,7 @@ public class SettableRuleFilter  extends AbstractLogicLink<TradeSettlementRuleCo
     private ITradeRepository repository;
 
     @Override
-    public TradeSettlementRuleFilterBackEntity apply(TradeSettlementRuleCommandEntity requestParameter, TradeSettlementRuleFilterFactory.DynamicContext dynamicContext) {
+    public TradeSettlementRuleFilterBackEntity doApply(TradeSettlementRuleCommandEntity requestParameter, TradeSettlementRuleFilterFactory.DynamicContext dynamicContext) {
         log.info("结算规则过滤-有效时间校验{} outTradeNo:{}", requestParameter.getUserId(), requestParameter.getOutTradeNo());
 
         // 上下文；获取数据
@@ -46,6 +46,6 @@ public class SettableRuleFilter  extends AbstractLogicLink<TradeSettlementRuleCo
 
         // 设置上下文
         dynamicContext.setGroupBuyTeamEntity(groupBuyTeamEntity);
-        return null;
+        return TradeSettlementRuleFilterBackEntity.builder().build();
     }
 }

@@ -1,5 +1,7 @@
 package com.zj.groupbuy.model.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.zj.groupbuy.common.model.IBaseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +17,9 @@ public enum TradeOrderStatusEnum implements IBaseEnum<Integer> {
     CLOSE(2, "超时关单"),
     ;
 
+    @EnumValue
     private Integer value;
+    @JsonValue
     private String label;
 
 

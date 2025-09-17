@@ -17,6 +17,7 @@ import com.zj.groupbuy.service.trade.model.entity.lock.MarketPayOrderEntity;
 import com.zj.groupbuy.service.trade.model.entity.lock.PayActivityEntity;
 import com.zj.groupbuy.service.trade.model.entity.lock.PayDiscountEntity;
 import com.zj.groupbuy.service.trade.model.entity.lock.UserEntity;
+import com.zj.groupbuy.utils.TimeUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Slf4j
@@ -56,6 +58,7 @@ public class MarketTradeController {
                         .build();
             }
 
+            // 防重加幂等，通过唯一的外部订单号
             MarketPayOrderEntity marketPayOrderEntity = tradeOrderService.queryNoPayMarketPayOutOrder(userId, outTradeNo);
             if (null != marketPayOrderEntity) {
                 LockMarketPayOrderResponseDTO lockMarketPayOrderResponseDTO = LockMarketPayOrderResponseDTO.builder()
@@ -82,7 +85,7 @@ public class MarketTradeController {
                             .build();
                 }
             }
-// 营销优惠试算
+            // 营销优惠试算
             TrialBalanceEntity trialBalanceEntity = indexGroupBuyMarketService.indexMarketTrial(MarketProductEntity.builder()
                     .userId(userId)
                     .source(source)
@@ -99,6 +102,9 @@ public class MarketTradeController {
             }
 
             GroupBuyActivity groupBuyActivityDiscountVO = trialBalanceEntity.getActivity();
+            Integer validTime = groupBuyActivityDiscountVO.getValidTime();
+            Date begin = new Date(System.currentTimeMillis());
+            Date end = TimeUtils.addMinutesToDate(begin, validTime);
             // 锁单
             marketPayOrderEntity = tradeOrderService.lockPayOrder(
                     UserEntity.builder().userId(userId).build(),
@@ -106,8 +112,8 @@ public class MarketTradeController {
                             .teamId(teamId)
                             .activityId(activityId)
                             .activityName(groupBuyActivityDiscountVO.getActivityName())
-                            .startTime(groupBuyActivityDiscountVO.getStartTime())
-                            .endTime(groupBuyActivityDiscountVO.getEndTime())
+                            .startTime(begin)
+                            .endTime(end)
                             .targetCount(groupBuyActivityDiscountVO.getTarget())
                             .build(),
                     PayDiscountEntity.builder()

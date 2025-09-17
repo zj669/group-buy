@@ -23,7 +23,7 @@ public class UserTakeLimitRuleFilter extends AbstractLogicLink<TradeLockRuleComm
     private ITradeRepository repository;
 
     @Override
-    public TradeLockRuleFilterBackEntity apply(TradeLockRuleCommandEntity requestParameter, TradeLockRuleFilterFactory.DynamicContext dynamicContext){
+    public TradeLockRuleFilterBackEntity doApply(TradeLockRuleCommandEntity requestParameter, TradeLockRuleFilterFactory.DynamicContext dynamicContext){
         log.info("交易规则过滤-用户参与次数校验{} activityId:{}", requestParameter.getUserId(), requestParameter.getActivityId());
 
         GroupBuyActivity groupBuyActivity = dynamicContext.getGroupBuyActivity();

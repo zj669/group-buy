@@ -11,4 +11,5 @@ public interface ILogicLink<REQUEST, CONTEXT, RESULT> extends ILogicChainArmory<
 
     RESULT apply(REQUEST request, CONTEXT dynamicContext);
 
+
 }

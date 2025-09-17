@@ -10,6 +10,18 @@ public abstract class AbstractLogicLink<REQUEST, CONTEXT, RESULT> implements ILo
 
     private ILogicLink<REQUEST, CONTEXT, RESULT> next;
 
+
+    @Override
+    public RESULT apply(REQUEST request, CONTEXT dynamicContext) {
+        RESULT ans = doApply(request, dynamicContext);
+        if(null != next){
+            return next.apply(request, dynamicContext);
+        }
+        return ans;
+    }
+
+    protected abstract RESULT doApply(REQUEST request, CONTEXT dynamicContext);
+
     @Override
     public ILogicLink<REQUEST, CONTEXT, RESULT> next() {
         return next;
