@@ -39,4 +39,6 @@ public interface ITradeRepository {
     List<NotifyTask> queryUnExecutedNotifyTaskList(String teamId);
 
     int updateNotifyTaskStatusSuccess(NotifyTask notifyTask);
+
+    boolean occupyTeamStock(String teamStockKey, String recoveryTeamStockKey, Integer target, Integer validTime);
 }

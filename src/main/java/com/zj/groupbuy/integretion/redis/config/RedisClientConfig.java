@@ -1,4 +1,4 @@
-package com.zj.groupbuy.integretion.redis;
+package com.zj.groupbuy.integretion.redis.config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;

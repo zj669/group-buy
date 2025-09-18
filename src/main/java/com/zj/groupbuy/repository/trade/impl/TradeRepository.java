@@ -2,7 +2,9 @@ package com.zj.groupbuy.repository.trade.impl;
 
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.zj.groupbuy.constants.Constants;
 import com.zj.groupbuy.exception.AppException;
+import com.zj.groupbuy.integretion.redis.IRedisService;
 import com.zj.groupbuy.model.entity.GroupBuyActivity;
 import com.zj.groupbuy.model.entity.GroupBuyOrder;
 import com.zj.groupbuy.model.entity.GroupBuyOrderList;
@@ -35,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @Slf4j
@@ -47,6 +50,8 @@ public class TradeRepository implements ITradeRepository {
     private GroupBuyOrderListMapper groupBuyOrderListDao;
     @Resource
     private NotifyTaskMapper notifyTaskDao;
+    @Resource
+    private IRedisService redisService;
     @Override
     public GroupBuyActivity queryGroupBuyActivityEntityByActivityId(Long activityId) {
 
@@ -256,6 +261,33 @@ public class TradeRepository implements ITradeRepository {
     @Override
     public int updateNotifyTaskStatusSuccess(NotifyTask notifyTask) {
         return notifyTaskDao.updateNotifyTaskStatusSuccess(notifyTask);
+    }
+
+    @Override
+    public boolean occupyTeamStock(String teamStockKey, String recoveryTeamStockKey, Integer target, Integer validTime) {
+        // 失败恢复量
+        Long recoveryCount = redisService.getAtomicLong(recoveryTeamStockKey);
+        recoveryCount = null == recoveryCount ? 0 : recoveryCount;
+
+        // 1. incr 得到值，与总量和恢复量做对比。恢复量为系统失败时候记录的量。
+        // 2. 从有组队量开始，相当于已经有了一个占用量，所以要 +1
+        long occupy = redisService.incr(teamStockKey) + 1;
+
+        if (occupy > target + recoveryCount) {
+            redisService.setAtomicLong(teamStockKey, target);
+            return false;
+        }
+
+        // 1. 给每个产生的值加锁为兜底设计，虽然incr操作是原子的，基本不会产生一样的值。但在实际生产中，遇到过集群的运维配置问题，以及业务运营配置数据问题，导致incr得到的值相同。
+        // 2. validTime + 60分钟，是一个延后时间的设计，让数据保留时间稍微长一些，便于排查问题。
+        String lockKey = teamStockKey + Constants.UNDERLINE + occupy;
+        Boolean lock = redisService.setNx(lockKey, validTime + 60, TimeUnit.MINUTES);
+
+        if (!lock) {
+            log.info("组队库存加锁失败 {}", lockKey);
+        }
+
+        return lock;
     }
 
     @Override

@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,8 +32,21 @@ public class TradeLockRuleFilterFactory extends AbstractLogicLinkFactory<TradeLo
     @AllArgsConstructor
     @NoArgsConstructor
     public static class DynamicContext {
+        private String teamStockKey = "group_buy_market_team_stock_key_";
 
         private GroupBuyActivity groupBuyActivity;
+
+        private Long userTakeOrderCount;
+
+        public String generateTeamStockKey(String teamId) {
+            if (StringUtils.isBlank(teamId)) return null;
+            return teamStockKey + groupBuyActivity.getActivityId() + "_" + teamId;
+        }
+
+        public String generateRecoveryTeamStockKey(String teamId) {
+            if (StringUtils.isBlank(teamId)) return null;
+            return teamStockKey + groupBuyActivity.getActivityId() + "_" + teamId + "_recovery";
+        }
 
     }
 }

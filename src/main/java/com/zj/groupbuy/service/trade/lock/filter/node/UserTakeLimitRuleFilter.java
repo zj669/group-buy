@@ -25,7 +25,6 @@ public class UserTakeLimitRuleFilter extends AbstractLogicLink<TradeLockRuleComm
     @Override
     public TradeLockRuleFilterBackEntity doApply(TradeLockRuleCommandEntity requestParameter, TradeLockRuleFilterFactory.DynamicContext dynamicContext){
         log.info("交易规则过滤-用户参与次数校验{} activityId:{}", requestParameter.getUserId(), requestParameter.getActivityId());
-
         GroupBuyActivity groupBuyActivity = dynamicContext.getGroupBuyActivity();
 
         // 查询用户在一个拼团活动上参与的次数
@@ -37,6 +36,7 @@ public class UserTakeLimitRuleFilter extends AbstractLogicLink<TradeLockRuleComm
             throw new AppException(ResponseCode.E0008.getInfo());
         }
 
+        dynamicContext.setUserTakeOrderCount(count);
         return TradeLockRuleFilterBackEntity.builder()
                 .userTakeOrderCount(count)
                 .build();
