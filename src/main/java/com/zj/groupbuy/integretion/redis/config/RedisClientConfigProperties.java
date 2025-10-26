@@ -1,9 +1,12 @@
 package com.zj.groupbuy.integretion.redis.config;
 
 import lombok.Data;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Role;
 
 @Data
+@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 @ConfigurationProperties(prefix = "redis.sdk.config", ignoreInvalidFields = true)
 public class RedisClientConfigProperties {
 

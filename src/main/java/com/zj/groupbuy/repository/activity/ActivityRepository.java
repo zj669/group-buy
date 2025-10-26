@@ -1,4 +1,4 @@
-package com.zj.groupbuy.repository.activity.impl;
+package com.zj.groupbuy.repository.activity;
 
 import com.zj.groupbuy.integretion.dcc.DCCService;
 import com.zj.groupbuy.model.entity.CrowdTagsDetail;
@@ -6,7 +6,6 @@ import com.zj.groupbuy.model.entity.GroupBuyActivity;
 import com.zj.groupbuy.model.entity.GroupBuyDiscount;
 import com.zj.groupbuy.model.entity.ScSkuActivity;
 import com.zj.groupbuy.model.entity.Sku;
-import com.zj.groupbuy.repository.activity.IActivityRepository;
 import com.zj.groupbuy.repository.mapper.*;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;

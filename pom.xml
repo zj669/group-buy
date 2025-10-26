@@ -19,7 +19,7 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
-        <mysql-connector.version>8.0.22</mysql-connector.version>
+        <mysql-connector.version>8.0.28</mysql-connector.version>
         <fastjson.version>2.0.28</fastjson.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <guava.version>32.1.3-jre</guava.version>

@@ -1,6 +1,5 @@
-package com.zj.groupbuy.repository.tag.impl;
+package com.zj.groupbuy.repository.tag;
 
-import com.zj.groupbuy.repository.tag.ITagRepository;
 import org.springframework.stereotype.Component;
 
 @Component
